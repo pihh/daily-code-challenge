@@ -22,10 +22,66 @@ function main(arr = []) {
   return min;
 }
 
-main([3, 4, -1, 1]);
-main([1, 2, 0]);
+// SOLUTION 2 - last possible min pointer.
+// It seemed too simple just using indexOf
+function main(arr = []) {
+  let a = arr[0];
+  let b = arr[0];
+  let i = 1;
+  let dist = b - a;
+  let min = Number.MAX_SAFE_INTEGER;
+  let loops = 0;
+
+  while (loops < 100 && i < arr.length) {
+    a = arr[i - 1];
+    b = arr[i];
+
+    if (a < 1) {
+      arr.splice(i - 1, 1);
+      continue;
+    }
+    if (b < 1) {
+      arr.splice(i, 1);
+      continue;
+    }
+    if (a === b) {
+      arr.splice(i, 1);
+      continue;
+    }
+
+    if (a > b) {
+      arr[i] = a;
+      arr[i - 1] = b;
+      i--;
+      continue;
+    }
+    dist = b - a;
+    if (dist > 1 && a + 1 < min) {
+      min = a + 1;
+    }
+    i++;
+    loops++;
+  }
+
+  // EDGE
+
+  if (arr.length < 2) {
+    const _min = arr[0];
+    min = _min === 1 ? 2 : 1;
+  }
+  if (arr.length > 1 && min > arr.length) {
+    min = arr.length + 1;
+  }
+
+  return { arr, min, loops };
+}
+
+//
+main([0]);
+main([1]);
+main([3, 4, -1, 1, 5, 9]);
+main([1, 2]);
+main([1, 2, 0, 3]);
 main([-1, -1, -1]);
 main([0, 0, 0, 0]);
 main([31]);
-
-// SOLUTION 2 - last possible min pointer.
