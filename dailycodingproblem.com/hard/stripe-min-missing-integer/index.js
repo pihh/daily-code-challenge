@@ -66,8 +66,7 @@ function main(arr = []) {
   // EDGE
 
   if (arr.length < 2) {
-    const _min = arr[0];
-    min = _min === 1 ? 2 : 1;
+    min = arr[0] === 1 ? 2 : 1;
   }
   if (arr.length > 1 && min > arr.length) {
     min = arr.length + 1;
