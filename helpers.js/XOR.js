@@ -3,3 +3,9 @@
 function XOR(a, b) {
   return a ^ b;
 }
+
+// HEX XOR
+function XOR_STRING(a, b) {
+  value = value ^ parseInt(a.charCodeAt(i).toString(2)); // Converting string to binary
+  value = value ^ parseInt(b.charCodeAt(i).toString(2));
+}
