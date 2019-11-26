@@ -1,3 +1,8 @@
+/*
+CHOOSE SORT
+bellow 64 elements: insertion sort
+range of elements is small ? : counting sort
+*/
 function bubbleSort(items) {
   var length = items.length;
   for (var i = 0; i < length; i++) {
@@ -13,4 +18,31 @@ function bubbleSort(items) {
       }
     }
   }
+}
+
+function countingSort(items = [], range) {
+  // create a counting map
+  const count = new Array(range).fill(0);
+  const sorted = new Array(items.length).fill(0);
+  const length = items.length;
+  // count ocorrences
+  for (let i = 0; i < length; i++) {
+    count[items[i]]++;
+  }
+
+  // accumulate
+  for (let i = 1; i < length; i++) {
+    count[i] = count[i] + count[i - 1];
+  }
+  // shift right
+  count.pop();
+  count.unshift(0);
+
+  for (let i = 0; i < length; i++) {
+    const current = items[i];
+    const index = count[current];
+    sorted[index] = current;
+    count[current]++;
+  }
+  return sorted;
 }

@@ -1,4 +1,4 @@
-// C35 out of 35
+// 35 out of 35
 function maximumToys(prices, k) {
   prices = prices.sort((a, b) => a - b);
 
