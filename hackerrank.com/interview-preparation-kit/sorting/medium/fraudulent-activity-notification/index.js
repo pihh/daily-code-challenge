@@ -14,47 +14,58 @@ function activityNotifications(expenditure, d) {
   return count;
 }
 
+// 100 % WORKING
+
 function activityNotifications(expenditure, d) {
-  // Number of notifications
-  let n = 0;
+  var [m1, m2] = [Math.floor((d - 1) / 2), Math.floor(d / 2)];
 
-  // Set midpoints for median calculation
-  // Since median = (a+b)/2 and we want (a+b)/2*2 it's allways a sum,
-  // instead of dividing , use d[m1] + d[m2] and avoid bad calculations
-  let [m1, m2] = [Math.floor((d - 1) / 2), Math.ceil((d - 1) / 2)]; // for 4 = 1,2 , for 3 = 1,1
-  /*
-    let m1, m2, m
+  var len = expenditure.length;
+  var map = {};
+  var n = 0;
 
-    // Initialize count sorted subarray
-    // Max expenditure = 201;
-    let cs = new Array(201).fill(0)
-    for (let i = d-1; i >= 0; i--) cs[expenditure[i]]++
+  function increment(key) {
+    if (!map[key]) map[key] = 0;
+    map[key]++;
+  }
+  function decrement(key) {
+    const result = map[key]--;
+    if (!map[key]) delete map[key];
+  }
 
-    // Iterate through expenditures
-    for (let i = d, l = expenditure.length; i < l; i++) {
-      	for (let j = 0, k = 0; k <= i1; k += cs[j], j++){
-          console.log({j,k,i1,csj:cs[j]})
-          m1 = j
-        }
-      	console.log('done');
+  function getMs() {
+    let k1 = undefined;
+    let k2 = undefined;
+    let _counter = 0;
+    const keys = Object.keys(map);
 
-        // Find median
-        for (let j = 0, k = 0; k <= i1; k += cs[j], j++) m1 = j
-        for (let j = 0, k = 0; k <= i2; k += cs[j], j++) m2 = j
-        let m = (m1 + m2) / 2
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      _counter += map[key];
 
-        // Check if notification is given
-        if (expenditure[i] >= m * 2) n++
-
-        // Replace subarray elements
-        cs[expenditure[i-d]]--
-        cs[expenditure[i]]++
-      console.log({i,d,expenditure})
-      console.log('loop done')
+      if (undefined === k1 && _counter > m1) {
+        k1 = key;
+      }
+      if (_counter > m2) {
+        k2 = key;
+        return [parseInt(k1), parseInt(k2)];
+      }
     }
-		*/
+  }
+
+  for (var i = 0; i < d; i++) {
+    const key = expenditure[i];
+    increment(key);
+  }
+
+  for (var i = d; i < len; i++) {
+    const key = expenditure[i];
+    // Compare key with m1 and m2
+    const m = getMs();
+
+    if (key >= m[0] + m[1]) n++;
+    decrement(expenditure[i - d]);
+    increment(expenditure[i]);
+  }
+
   return n;
 }
-
-activityNotifications([1, 2, 3, 3, 4, 4], 4);
-//activityNotifications([2,3,4,2,3,6,8,4,5],5)
