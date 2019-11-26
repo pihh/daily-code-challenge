@@ -1,4 +1,6 @@
 // BRUTE FORCED
+// We track the array of i-d to d , sort it , find the middle points and check
+// A sort inside a for loop is allways slow
 function activityNotifications(expenditure, d) {
   let [m1, m2] = [Math.floor((d - 1) / 2), Math.ceil((d - 1) / 2)]; // for 4 = 1,2 , for 3 = 1,1
 
@@ -15,7 +17,8 @@ function activityNotifications(expenditure, d) {
 }
 
 // 100 % WORKING
-
+// We map the first d parameters on a map to count sort
+// the map will have:
 function activityNotifications(expenditure, d) {
   var [m1, m2] = [Math.floor((d - 1) / 2), Math.floor(d / 2)];
 
