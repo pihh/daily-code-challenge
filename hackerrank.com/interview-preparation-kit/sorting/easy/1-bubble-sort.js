@@ -1,4 +1,4 @@
-// Complete the countSwaps function below.
+// 30 out of 30
 function countSwaps(arr = []) {
   let count = 0;
   const n = arr.length;
