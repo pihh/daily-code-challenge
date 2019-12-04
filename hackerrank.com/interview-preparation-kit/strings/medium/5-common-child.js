@@ -8,24 +8,36 @@
   M
   N
 */
-function commonChild(s2, s1) {
-  // Convert strings to arrays
+
+// Complete the commonChild function below.
+function commonChild(s1, s2) {
   s1 = s1.split("");
   s2 = s2.split("");
 
-  // Track the greatest length;
-  let max = 0;
-  const strings = [];
-  const length = s1.length;
-  for (let i = 0; i < length; i++) {
-    console.log(s1[i]);
-    const index = s2.indexOf(s1[i]);
-    if (index > -1)
-      strings.push({ character: s1[i], rest: s2.slice(index + 1, length) });
+  s1.unshift(" ");
+  s2.unshift(" ");
 
-    console.log(strings);
+  let max = 0;
+  const matrix = new Array(s1.length)
+    .fill(0)
+    .map(el => new Array(s1.length).fill(0));
+
+  for (let i = 1; i < matrix.length; i++) {
+    const c1 = s2[i];
+    for (let j = 1; j < matrix.length; j++) {
+      const c2 = s1[j];
+      //matrix[i][j] = [c1,c2];
+      if (c1 === c2) {
+        const update = matrix[i - 1][j - 1] + 1;
+        matrix[i][j] = update;
+        if (update > max) max = update;
+      } else {
+        matrix[i][j] = Math.max(matrix[i - 1][j], matrix[i][j - 1]);
+      }
+    }
   }
-  console.log("XXXXXXXXXXXXXXXXXXXXXXXXXX");
+
+  return max;
 }
 
 // FAILED 10 out of 15
@@ -72,10 +84,3 @@ function commonChild(s2, s1) {
   console.log(strings);
   return max;
 }
-
-commonChild("ABCDEF", "FBDAMN");
-commonChild("SHINCHAN", "NOHARAAA");
-commonChild(
-  "WEWOUCUIDGCGTRMEZEPXZFEJWISRSBBSYXAYDFEJJDLEBVHHKS",
-  "FDAGCXGKCTKWNECHMRXZWMLRYUCOCZHJRRJBOAJOQJZZVUYXIC"
-);
