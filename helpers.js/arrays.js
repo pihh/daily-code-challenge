@@ -23,3 +23,8 @@ function bisectRight(array, x) {
 /**
  BEST SORTING ALGORITHM EVER
  */
+
+// FAST SORTED SET
+a = [...new Set(a.sort((x, y) => x - y))];
+b = [...new Set(b.sort((x, y) => x - y))];
+c = [...new Set(c.sort((x, y) => x - y))];
